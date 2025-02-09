@@ -15,14 +15,14 @@ const verifyToken = (req, res, next) => {
 
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("The decoded user is", decode);
+      req.user = decode;
+      console.log("The decoded user is", req.user);
       next();
     } catch (error) {
       res.status(400).json({ message: "Invalid Token" });
     }
-  }
-  else{
-    res.status(401).json({message: "Access Denied as no token provided"});
+  } else {
+    res.status(401).json({ message: "Access Denied as no token provided" });
   }
 };
 
